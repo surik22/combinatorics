@@ -7,7 +7,7 @@ class Combinatorics {
     protected $combinations = [];
 
     //HIGHLY ADVISED TO KEEP IT ON
-    protected $strict_mode = "off";
+    protected $strict_mode = "on";
 
     function __construct($marbles, $holes, $filename) {
         $this->marbles = $marbles;
