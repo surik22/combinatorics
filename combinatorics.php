@@ -4,9 +4,10 @@ class Combinatorics {
     protected $holes;
     protected $filename;
     protected $errorMsg;
+    protected $combinations = [];
 
     //HIGHLY ADVISED TO KEEP IT ON
-    protected $strict_mode = "on";
+    protected $strict_mode = "off";
 
     function __construct($marbles, $holes, $filename) {
         $this->marbles = $marbles;
@@ -18,8 +19,8 @@ class Combinatorics {
             if(!empty($result)) {
                 foreach($result as $item) {
                     $pattern = $this->drawPattern($item);
-                    $test = $this->drawCombination($pattern);
-                    $combinations = array_merge($combinations, $test);
+                    $tempCombination = $this->drawCombination($pattern);
+                    $combinations = array_merge($combinations, $tempCombination);
                 }
             }
             $this->writeToFile($combinations);
@@ -82,7 +83,6 @@ class Combinatorics {
     private function createPatternSpaceMap() {
         $a = [];
         for ($i=1; $i<$this->marbles; $i++) {
-
             $a[] = range(0, $this->holes);
         }
         $result = array(array());
@@ -108,9 +108,7 @@ class Combinatorics {
     private function drawPattern($step) {
         $pattern = "*";
         for($i=0; $i<count($step); $i++) {
-            for($blank = 0; $blank < $step[$i]; $blank++) {
-                $pattern .= "-";
-            }
+            $pattern .= str_repeat("-", $step[$i]);
             $pattern .= "*";
         }
         return $pattern;
